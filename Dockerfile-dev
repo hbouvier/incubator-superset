@@ -23,6 +23,16 @@ FROM preset/superset:dev
 COPY ./requirements* ./docker/requirements* /app/
 
 USER root
+
+# [DREMIO] Install dremio ODBC Connector
+RUN apt-get update -y && \
+    apt-get install -y alien && \
+    wget https://download.dremio.com/odbc-driver/1.4.2.1003/dremio-odbc-1.4.2.1003-1.x86_64.rpm && \
+    alien dremio-odbc-1.4.2.1003-1.x86_64.rpm && \
+    dpkg -i dremio-odbc_1.4.2.1003-2_amd64.deb && \
+    apt install -y unixodbc-dev && \
+    rm -rf /var/lib/apt/lists/* dremio-odbc-1.4.2.1003-1.x86_64.rpm dremio-odbc_1.4.2.1003-2_amd64.deb
+
 RUN cd /app \
     && pip install -e . \
     && pip install --no-cache -r requirements.txt -r requirements-dev.txt \

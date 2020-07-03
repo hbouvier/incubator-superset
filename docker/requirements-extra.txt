@@ -17,3 +17,6 @@
 gevent==1.4.0
 psycopg2-binary==2.8.5
 redis==3.2.1
+
+# [DREMIO] Add dremio odbc connector
+sqlalchemy_dremio==1.1.4
